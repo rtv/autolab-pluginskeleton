@@ -1,24 +1,22 @@
 cmake_minimum_required(VERSION 2.6)
 
 # change this to your project name - sets the variable PROJECT_NAME
-PROJECT(autolab-libskeleton)
+PROJECT(autolab-pluginskeleton)
 
 # version numbers
 SET( V_MAJOR 0 )
 SET( V_MINOR 1 )
 SET( V_BUGFIX 0 )
 
-# your release version
+# your release version - you can use this in your code by generating a
+# config.h fle (todo)
 SET( VERSION ${V_MAJOR}.${V_MINOR}.${V_BUGFIX} )
-
-# your API version - the library will be named using this value
 SET( APIVERSION ${V_MAJOR}.${V_MINOR} )
+
+# generate a config.h file so that the code can obtain compile-time
+# info such as the project name and version numbers defined above
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in 
+					${CMAKE_CURRENT_SOURCE_DIR}/config.h @ONLY)
 
 ADD_DEFINITIONS(-g -Wall -O2)
 ADD_SUBDIRECTORY(src)
-
-# Create and install the pkgconfig file from the .in template
-# you must rename and edit the file autolab-skeleton.pc.in for your project
-SET( PKGFILE ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.pc )
-CONFIGURE_FILE( ${PKGFILE}.in ${PKGFILE} @ONLY)
-INSTALL( FILES ${PKGFILE} DESTINATION lib/pkgconfig/)

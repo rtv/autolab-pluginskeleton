@@ -1,26 +1,19 @@
 
 
+# create a plugin called <PROJECT_NAME>.so
 SET( TARGET ${PROJECT_NAME} )
 
-SET( HEADERS  
-	  # your end-user header file, to be installed in <prefix>/include
-)
-
 SET( SOURCES 
-	  # your source code
+	  # your source code files
 )
 
-# build a shared library
-ADD_LIBRARY( ${TARGET} SHARED ${SOURCES} )
+# build a runtime loadable shared library (.so / .dll )
+ADD_LIBRARY( ${TARGET} MODULE ${SOURCES} )
 
-# give the shared library a version number
-SET_TARGET_PROPERTIES( ${TARGET} PROPERTIES
-		       VERSION ${VERSION}
-)
+# delete the "lib" prefix from the plugin library
+SET_TARGET_PROPERTIES( ${TARGET} PROPERTIES PREFIX "" )
 
-INSTALL(TARGETS ${TARGET}
-		  LIBRARY DESTINATION lib )
+# install in <CMAKE_INSTALL_PREFIX>/lib
+INSTALL(TARGETS ${TARGET} DESTINATION lib )
 
-INSTALL(FILES ${HEADERS}
-        DESTINATION include/${PROJECT_NAME}-${APIVERSION}
-)
+
